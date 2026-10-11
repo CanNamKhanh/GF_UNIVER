@@ -1,0 +1,136 @@
+/* Tailwind v4 (create-next-app default).
+   On Tailwind v3, replace the next line with:
+   @tailwind base; @tailwind components; @tailwind utilities;
+   and add the two font utilities below to tailwind.config.ts (fontFamily.body / fontFamily.display). */
+@import "tailwindcss";
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overscroll-behavior: none;
+  background: #020207;
+}
+
+.font-body {
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+}
+
+canvas {
+  touch-action: none; /* let OrbitControls own touch gestures */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Galaxy background: near-black with a few faint white streaks ---------- */
+.galaxy-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    #0a0b15 0%,
+    #04040b 55%,
+    #010103 100%
+  );
+}
+
+.galaxy-drift {
+  position: absolute;
+  inset: -6%;
+  animation: galaxy-drift 120s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.galaxy-streak {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 9999px;
+  transform: translate(calc(-50% + var(--x, 0vw)), calc(-50% + var(--y, 0vh)))
+    rotate(var(--r, -28deg));
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 255, 255, var(--a, 0.08)),
+    transparent
+  );
+  filter: blur(var(--b, 30px));
+}
+
+/* One razor-thin line of light for a bit of finesse */
+.galaxy-hairline {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 120vmax;
+  height: 1px;
+  transform: translate(calc(-50% + 4vw), calc(-50% - 2vh)) rotate(-28deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.16) 50%,
+    transparent
+  );
+  filter: blur(0.6px);
+}
+
+@keyframes galaxy-drift {
+  from {
+    transform: scale(1.02) translate3d(-1%, -0.5%, 0);
+  }
+  to {
+    transform: scale(1.08) translate3d(1%, 0.8%, 0);
+  }
+}
+
+/* ---------- Ghost buttons: transparent until hovered ---------- */
+.btn-ghost {
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.btn-ghost.btn-borderless {
+  border-width: 0;
+  border-radius: 0.25rem;
+}
+
+.btn-ghost:hover:not(:disabled),
+.btn-ghost:focus-visible {
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  outline: none;
+}
+
+.btn-ghost:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.btn-ghost.btn-danger:hover:not(:disabled),
+.btn-ghost.btn-danger:focus-visible {
+  border-color: rgba(253, 164, 175, 0.7);
+  background: rgba(244, 63, 94, 0.1);
+  color: #fecdd3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .galaxy-drift {
+    animation: none;
+  }
+}
